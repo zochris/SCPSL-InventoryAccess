@@ -1,6 +1,8 @@
-﻿using Exiled.API.Enums;
+﻿using System.Linq;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs;
+using Interactables.Interobjects.DoorUtils;
 
 namespace SCPSL_InventoryAccess
 {
@@ -10,7 +12,7 @@ namespace SCPSL_InventoryAccess
         {
             if (ev.Player.Side == Side.Scp) return;
             if (ev.IsAllowed) return;
-            ev.IsAllowed = HasPermission(ev.Player, ev.Door.permissionLevel);
+            ev.IsAllowed = HasPermission(ev.Player, ev.Door.RequiredPermissions);
         }
 
         public void OnPlayerLockerInteract(InteractingLockerEventArgs ev)
@@ -43,6 +45,11 @@ namespace SCPSL_InventoryAccess
             ev.IsAllowed = HasPermission(ev.Player, "CONT_LVL_3");
         }
 
+        private bool HasPermission(Player player, DoorPermissions permissions)
+        {
+            return player.Inventory.items.Any(item => permissions.CheckPermissions(item.id, player.ReferenceHub));
+        }
+        
         private bool HasPermission(Player player, string requested)
         {
             if (requested == "")
