@@ -1,3 +1,6 @@
+## ⚠️ Important Note
+This plugin is NOT under active development and is built for EXILED 3. There is an actively maintained alternative [here](https://github.com/Parkeymon/RemoteKeycard).
+
 # SCPSL-InventoryAccess
 
 Access doors and lockers without having to hold the keycard in your hands. 
